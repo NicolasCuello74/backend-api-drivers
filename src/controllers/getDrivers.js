@@ -3,7 +3,7 @@ const { Driver, Team } = require("../db");
 
 const getDrivers = async (req, res) => {
   try {
-    const url = "backend-api-drivers.vercel.app/api";
+    const url = "http://localhost:3001/api";
     const response = await axios.get(url);
     const arrayDriversApi = response.data
     
