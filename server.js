@@ -1,5 +1,7 @@
+const { conn } = require('./src/db.js');
+
 const express = require("express");
-const router = require("./routes");
+const router = require("./src/routes/index.js");
 const morgan = require("morgan");
 const cors = require("cors");
 
@@ -11,4 +13,8 @@ server.use(cors());
 
 server.use(router);
 
-module.exports = server;
+module.exports =async (req, res) =>{
+  await conn.sync({ force: false });
+  server(req, res);
+}
+
