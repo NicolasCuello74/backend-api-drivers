@@ -8,7 +8,7 @@ const driversByNameApi = async (name) => {
   try {
     // Crear expresión regular basada en el valor de entrada
     const regex = new RegExp(name, "i");
-    const url = `http://localhost:3001/api`;
+    const url = `http://localhost:3000/api`;
 
     // Obtener datos desde la API
     const response = await axios.get(url);

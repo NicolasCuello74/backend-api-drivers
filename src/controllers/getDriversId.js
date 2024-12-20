@@ -25,7 +25,7 @@ const getDriversId = async (req, res) => {
       res.status(200).json(cleanedData);
     } else {
       // Buscar en la API externa si el ID es un número
-      const url = "http://localhost:3001/api";
+      const url = "http://localhost:3000/api";
       const response = await axios.get(url);
 
       // Procesar los datos obtenidos de la API
