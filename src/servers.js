@@ -8,7 +8,7 @@ const server = express();
 server.use(morgan("dev"));
 server.use(express.json());
 server.use(cors({ 
-origin: 'http://localhost:5173', 
+origin: ['http://localhost:5173', 'https://frontend-drivers.vercel.app'], 
 methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
 credentials: true, }));
 
