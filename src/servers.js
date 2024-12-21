@@ -7,7 +7,10 @@ const server = express();
 
 server.use(morgan("dev"));
 server.use(express.json());
-server.use(cors());
+server.use(cors({ 
+origin: 'http://localhost:5173', 
+methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
+credentials: true, }));
 
 server.use(router);
 
