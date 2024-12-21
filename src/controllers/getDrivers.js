@@ -3,11 +3,11 @@ const { Driver, Team } = require("../db");
 
 const getDrivers = async (req, res) => {
   try {
-    const url = "http://localhost:3001/api";
+    const url = process.env.API_URL || "http://localhost:3001/api"; // Usa una variable de entorno para la URL
     const response = await axios.get(url);
-    const arrayDriversApi = response.data
+    const arrayDriversApi = response.data;
     
-    const driversApi = await arrayDriversApi.map((driver) => ({
+    const driversApi = arrayDriversApi.map((driver) => ({
       id: driver.id,
       forename: driver.name?.forename || "N/A",
       surname: driver.name?.surname || "N/A",
@@ -16,16 +16,13 @@ const getDrivers = async (req, res) => {
       nationality: driver.nationality || "Unknown",
       dob: driver.dob || "Unknown",
       teams: driver.teams || "No teams listed",
-      }));
+    }));
 
+    const arrayDriversDb = await Driver.findAll({
+      include: Team,
+    });
 
-    const arrayDriversDb = await Driver.findAll(
-      {
-        include: Team,
-      }
-      
-      );
-    const CleanDriversDb = await arrayDriversDb.map((driver)=>  ({
+    const CleanDriversDb = arrayDriversDb.map((driver) => ({
       id: driver.id,
       forename: driver.forename,
       surname: driver.surname,
@@ -33,11 +30,11 @@ const getDrivers = async (req, res) => {
       image: driver.image,
       nationality: driver.nationality,
       dob: driver.dob,
-      teams: driver.Teams.map((team)=>(team.name)).toString(),
-    }))
+      teams: driver.Teams.map((team) => team.name).toString(),
+    }));
 
     let allDrivers = [];
-    
+
     if (driversApi.length > 0 && CleanDriversDb.length > 0) {
       allDrivers = [...driversApi, ...CleanDriversDb];
     } else if (driversApi.length > 0) {
